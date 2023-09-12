@@ -25,7 +25,7 @@ public:
         m_radius = NAN;
     }
 
-    bool rayIntersect(const Vector3 &pos, const Vector3 &dir, Vector3 &hit_pos, Vector3 &hit_norm) const;
+    RayHit Sphere::rayIntersect(const Vector3 &pos, const Vector3 &dir) const;
 };
 
 #endif  // SPHERE_HPP

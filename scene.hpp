@@ -49,8 +49,6 @@ public:
 
         m_lights[m_cnt_lights++] = light;
     }
-
-    Sphere getSphere(
 };
 
 #endif  // SCENE_HPP

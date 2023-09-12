@@ -115,6 +115,15 @@ public:
     {
         return dot(*this, rhs) / rhs.len();
     }
+
+    operator sf::Color() const
+    {
+        m_x = max(min(m_x, 1), 0);
+        m_y = max(min(m_y, 1), 0);
+        m_z = max(min(m_z, 1), 0);
+        
+        return sf::Color((uint8_t) (m_x * 255), (uint8_t) (m_y * 255), (uint8_t) (m_z * 255));
+    }
 };
 
 #endif  // VECTOR_HPP

@@ -1,18 +1,16 @@
-#ifndef ERA_HPP
+#ifndef CAMERA_HPP
 #define CAMERA_HPP
 
 class Camera
 {
     Vector3 m_pos;
     Vector3 m_dir;
-    double  m_fov;
 
 public:
 
-    Camera(Vector3 pos, Vector3 dir, double fov) :
-        m_pos    (pos),
-        m_dir    (dir),
-        m_fov    (fov)
+    Camera(Vector3 pos, Vector3 dir) :
+        m_pos (pos),
+        m_dir (dir)
     {}
     
     Camera(const Camera &rhs) = default;
