@@ -6,7 +6,7 @@
 
 class Scene
 {
-    static const int MAX_SPHERES = 3;
+    static const int MAX_SPHERES = 5;
     static const int MAX_LIGHTS  = 2;
 
     int8_t m_cnt_spheres;
@@ -19,8 +19,8 @@ public:
 
     Scene() : 
         m_cnt_spheres (0),
-        m_cnt_lights  (0),
         m_spheres     {},
+        m_cnt_lights  (0),
         m_lights      {}
     {}
 

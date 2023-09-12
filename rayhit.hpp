@@ -13,8 +13,8 @@ class RayHit
 public:
 
     RayHit(bool flag, double len_hit = 0, Vector3 hit_pos = {}, Vector3 hit_norm = {}, Material material = {}) :
-        m_len_hit  (len_hit),
         m_flag     (flag),
+        m_len_hit  (len_hit),
         m_hit_pos  (hit_pos),
         m_hit_norm (hit_norm),
         m_material (material)

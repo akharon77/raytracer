@@ -6,8 +6,8 @@
 
 #include "tracer.hpp"
 
-const uint32_t SCREEN_WIDTH  = 300;
-const uint32_t SCREEN_HEIGHT = 200;
+const uint32_t SCREEN_WIDTH  = 1024; 
+const uint32_t SCREEN_HEIGHT = 576;
 
 int main()
 {
@@ -27,6 +27,15 @@ int main()
             {1, 1, 1},
             {1, 1, 1}
         });
+
+    // scene.addLight(
+    //     {
+    //         {-9, -5, -5},
+    //         {1, 1, 1},
+    //         {1, 1, 1},
+    //         {1, 1, 1}
+    //     });
+    
     scene.addSphere(
         {
             {-0.2, 0, -1},
@@ -36,7 +45,46 @@ int main()
                 {0.7, 0, 0},
                 {  1, 1, 1},
                 100,
-                0.5
+                0.8
+            }
+        });
+
+    scene.addSphere(
+        {
+            {0.1, -0.3, 0},
+            0.1,
+            {
+                {0.1, 0, 0.1},
+                {0.7, 0, 0.7},
+                {  1, 1, 1},
+                100,
+                0
+            }
+        });
+
+    scene.addSphere(
+        {
+            {-0.3, 0, 0},
+            0.15,
+            {
+                {0, 0.1, 0},
+                {0, 0.6, 0},
+                {1,   1, 1},
+                100,
+                0.6
+            }
+        });
+
+    scene.addSphere(
+        {
+            {0.5, -0.3, -0.3},
+            0.1,
+            {
+                {0, 0, 0.2},
+                {0, 0, 0.5},
+                {1, 1,   1},
+                100,
+                1
             }
         });
 
