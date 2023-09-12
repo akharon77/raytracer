@@ -2,11 +2,12 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
-#include <SFML/System/Clock.hpp>
 #include <SFML/Window/VideoMode.hpp>
 
-const uint32_t SCREEN_WIDTH  = 720;
-const uint32_t SCREEN_HEIGHT = 480;
+#include "tracer.hpp"
+
+const uint32_t SCREEN_WIDTH  = 300;
+const uint32_t SCREEN_HEIGHT = 200;
 
 int main()
 {
@@ -18,7 +19,28 @@ int main()
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "raytracer");
 
     Scene scene;
-    Tracer tracer(scene);
+
+    scene.addLight(
+        {
+            {5, 5, 5},
+            {1, 1, 1},
+            {1, 1, 1},
+            {1, 1, 1}
+        });
+    scene.addSphere(
+        {
+            {-0.2, 0, -1},
+            0.7,
+            {
+                {0.1, 0, 0},
+                {0.7, 0, 0},
+                {  1, 1, 1},
+                100,
+                0.5
+            }
+        });
+
+    Tracer tracer(scene, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     while (window.isOpen())
     {
@@ -30,10 +52,13 @@ int main()
                 window.close();
         }
 
+        texture.update(tracer.render());
+        sprite.setTexture(texture);
+
         window.clear(sf::Color::White);
         window.draw(sprite);
         window.display();
     }
 
-return 0;
+    return 0;
 }

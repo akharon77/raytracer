@@ -2,14 +2,12 @@
 
 RayHit Tracer::nearestHitSphere(const Vector3 &pos, const Vector3 &dir) const
 {
-    assert(dir.len2() == 1);
-
     RayHit hit     (false);
     RayHit min_hit (false);
 
-    for (int8_t i = 0; i < m_cnt_spheres; ++i)
+    for (int8_t i = 0; i < m_scene.cntSpheres(); ++i)
     {
-        RayHit hit = m_scene.spheres()[i].rayIntersect(pos, dir);
+        hit = m_scene.spheres()[i].rayIntersect(pos, dir);
 
         if (hit.hit() && (!min_hit.hit() || hit.len() < min_hit.len()))
             min_hit = hit;
@@ -18,23 +16,26 @@ RayHit Tracer::nearestHitSphere(const Vector3 &pos, const Vector3 &dir) const
     return min_hit;
 }
 
-void Tracer::render()
+const sf::Image& Tracer::render()
 {
-    double y = m_bottom;
-    double step_y = (m_top - m_bottom) / height;
+    double step_y = (m_top - m_bottom) / m_height;
 
-    double x = m_left;
-    double step_x = (m_right - m_left) / width;
+    double step_x = (m_right - m_left) / m_width;
 
-    for (int32_t i = 0; i < width; ++i, x += step_x)
+    double y = m_top;
+    for (int32_t i = 0; i < m_height; ++i, y -= step_y)
     {
-        for (int32_t j = 0; j < height; ++j, y += step_y)
+        double x = m_left;
+        for (int32_t j = 0; j < m_width; ++j, x += step_x)
         {
+            // printf("%d %d %lf %lf\n", i, j, y, x);
             Vector3 pixel  = {x, y, 0};
             Vector3 origin = m_camera;
-            Vector3 dir    = (pixel - camera).norm();
+            Vector3 dir    = (pixel - origin).norm();
 
             double reflection = 1;
+
+            Vector3 color = {};
 
             for (int8_t k = 0; k < MAX_DEPTH; ++k)
             {
@@ -43,10 +44,10 @@ void Tracer::render()
                 if (!sphere_hit.hit())
                     break;
 
-                Vector3 shifted_hit_pos = sphere_hit.pos() + EPS * shpere_hit.norm();
-                Vector3 dir_hit_light = (m_scene.light().pos() - shifted_hit_pos).norm();
+                Vector3 shifted_hit_pos = sphere_hit.pos() + sphere_hit.norm() * EPS;
+                Vector3 dir_hit_light = (m_scene.lights()[0].pos() - shifted_hit_pos).norm();
 
-                double len_hit_to_light = (m_scene.light().pos() - sphere_hit).len();
+                double len_hit_to_light = (m_scene.lights()[0].pos() - sphere_hit.pos()).len();
 
                 RayHit light_hit = nearestHitSphere(shifted_hit_pos, dir_hit_light);
                 if (light_hit.hit() && light_hit.len() < len_hit_to_light)
@@ -54,22 +55,25 @@ void Tracer::render()
 
                 Vector3 illumination = {};
 
-                illumination += sphere_hit.material().ambient() * m_scene.light().ambient();
+                illumination += sphere_hit.material().ambient() * m_scene.lights()[0].ambient();
             
-                illumination += sphere_hit.material().diffuse() * m_scene.light().diffuse() * Vector3::dot(dir_hit_light, sphere_hit.norm());
+                illumination += sphere_hit.material().diffuse() * m_scene.lights()[0].diffuse() * Vector3::dot(dir_hit_light, sphere_hit.norm());
 
                 Vector3 dir_hit_camera = (m_camera - sphere_hit.pos()).norm();
                 Vector3 H = (dir_hit_light + dir_hit_camera).norm();
-                illumination += sphere_hit.material().specular() * m_scene.light().specular() * pow(Vector3::dot(sphere_hit.norm(), H), sphere_hit.material().shiness() / 4);
+                illumination += sphere_hit.material().specular() * m_scene.lights()[0].specular() * pow(Vector3::dot(sphere_hit.norm(), H), sphere_hit.material().shiness() / 4);
 
-                color += reflection * illumination;
-                reflection *= shpere_hit.material().reflection();
+                color +=  illumination * reflection;
+                reflection *= sphere_hit.material().reflection();
                 origin = shifted_hit_pos;
-                dir = reflected(dir, sphere_hit.norm());
+
+                dir = (dir - sphere_hit.norm() * 2 * Vector3::dot(dir, sphere_hit.norm())).norm();
             }
 
-            m_image.setPixel(i, j, (sf::Color) color);
+            m_image.setPixel(j, i, (sf::Color) color);
         }
     }
+
+    return m_image;
 }
 

@@ -1,6 +1,10 @@
 #ifndef SPHERE_HPP
 #define SPHERE_HPP
 
+#include "vector.hpp"
+#include "material.hpp"
+#include "rayhit.hpp"
+
 class Sphere
 {
     Vector3  m_center;
@@ -10,7 +14,7 @@ class Sphere
 
 public:
 
-    Sphere(const Vector3 &center, double radius, Material material) :
+    Sphere(const Vector3 &center = {}, double radius = 0, Material material = {}) :
         m_center   (center),
         m_radius   (radius),
         m_material (material)
@@ -25,7 +29,7 @@ public:
         m_radius = NAN;
     }
 
-    RayHit Sphere::rayIntersect(const Vector3 &pos, const Vector3 &dir) const;
+    RayHit rayIntersect(const Vector3 &pos, const Vector3 &dir) const;
 };
 
 #endif  // SPHERE_HPP

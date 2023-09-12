@@ -1,12 +1,13 @@
 #ifndef SCENE_HPP
 #define SCENE_HPP
 
+#include "sphere.hpp"
+#include "light.hpp"
+
 class Scene
 {
     static const int MAX_SPHERES = 3;
     static const int MAX_LIGHTS  = 2;
-
-    Camera m_cam;
 
     int8_t m_cnt_spheres;
     Sphere m_spheres[MAX_SPHERES];
@@ -16,8 +17,7 @@ class Scene
 
 public:
 
-    Scene(Camera cam) : 
-        m_cam         (cam),
+    Scene() : 
         m_cnt_spheres (0),
         m_cnt_lights  (0),
         m_spheres     {},
@@ -48,6 +48,26 @@ public:
             return;
 
         m_lights[m_cnt_lights++] = light;
+    }
+
+    int8_t cntSpheres() const
+    {
+        return m_cnt_spheres;
+    }
+
+    const Sphere* spheres() const
+    {
+        return m_spheres;
+    }
+
+    int8_t cntLights() const
+    {
+        return m_cnt_lights;
+    }
+
+    const Light* lights() const
+    {
+        return m_lights;
     }
 };
 

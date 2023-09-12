@@ -1,9 +1,17 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
+#include <SFML/Graphics/Color.hpp>
+
+#include <cmath>
+#include <algorithm>
+#include <cassert>
+
 class Vector3
 {
-    double m_x, m_y, m_z;
+    double m_x;
+    double m_y;
+    double m_z;
 
 public:
 
@@ -34,12 +42,17 @@ public:
         return Vector3(*this) -= rhs;
     }
     
-    Vector3 operator * (const double rhs) const
+    Vector3 operator * (double rhs) const
     {
         return Vector3(*this) *= rhs;
     }
 
-    Vector3 operator / (const double rhs) const
+    Vector3 operator * (const Vector3 &rhs) const
+    {
+        return Vector3(*this) *= rhs;
+    }
+
+    Vector3 operator / (double rhs) const
     {
         return Vector3(*this) /= rhs;
     }
@@ -53,7 +66,7 @@ public:
         return *this;
     }
 
-    Vector3& operator -= (cont Vector3 &rhs)
+    Vector3& operator -= (const Vector3 &rhs)
     {
         m_x -= rhs.m_x;
         m_y -= rhs.m_y;
@@ -62,7 +75,7 @@ public:
         return *this;
     }
 
-    Vector3& operator *= (const double rhs)
+    Vector3& operator *= (double rhs)
     {
         m_x *= rhs;
         m_y *= rhs;
@@ -71,15 +84,20 @@ public:
         return *this;
     }
 
-    Vector3& operator /= (const double rhs)
+    Vector3& operator *= (const Vector3 &rhs)
+    {
+        m_x *= rhs.m_x;
+        m_y *= rhs.m_y;
+        m_z *= rhs.m_z;
+
+        return *this;
+    }
+
+    Vector3& operator /= (double rhs)
     {
         rhs = 1.0 / rhs;
 
-        m_x *= rhs;
-        m_y *= rhs;
-        m_z *= rhs;
-
-        return *this;
+        return (*this) *= rhs;
     }
 
     Vector3 operator - () const
@@ -111,18 +129,13 @@ public:
         return res;
     }
 
-    Vector3 projection(const Vector3 &rhs) const
-    {
-        return dot(*this, rhs) / rhs.len();
-    }
-
     operator sf::Color() const
     {
-        m_x = max(min(m_x, 1), 0);
-        m_y = max(min(m_y, 1), 0);
-        m_z = max(min(m_z, 1), 0);
+        double x = std::max(std::min(m_x, 1.), 0.);
+        double y = std::max(std::min(m_y, 1.), 0.);
+        double z = std::max(std::min(m_z, 1.), 0.);
         
-        return sf::Color((uint8_t) (m_x * 255), (uint8_t) (m_y * 255), (uint8_t) (m_z * 255));
+        return sf::Color((uint8_t) (x * 255), (uint8_t) (y * 255), (uint8_t) (z * 255));
     }
 };
 
