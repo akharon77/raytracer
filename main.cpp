@@ -19,76 +19,9 @@ int main()
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "raytracer");
 
     Scene scene;
+    scene.setExampleScene();
 
-    scene.addLight(
-        {
-            {5, 5, 5},
-            {1, 1, 1},
-            {1, 1, 1},
-            {1, 1, 1}
-        });
-
-    // scene.addLight(
-    //     {
-    //         {-9, -5, -5},
-    //         {1, 1, 1},
-    //         {1, 1, 1},
-    //         {1, 1, 1}
-    //     });
-    
-    scene.addSphere(
-        {
-            {-0.2, 0, -1},
-            0.7,
-            {
-                {0.1, 0, 0},
-                {0.7, 0, 0},
-                {  1, 1, 1},
-                100,
-                0.8
-            }
-        });
-
-    scene.addSphere(
-        {
-            {0.1, -0.3, 0},
-            0.1,
-            {
-                {0.1, 0, 0.1},
-                {0.7, 0, 0.7},
-                {  1, 1, 1},
-                100,
-                0
-            }
-        });
-
-    scene.addSphere(
-        {
-            {-0.3, 0, 0},
-            0.15,
-            {
-                {0, 0.1, 0},
-                {0, 0.6, 0},
-                {1,   1, 1},
-                100,
-                0.6
-            }
-        });
-
-    scene.addSphere(
-        {
-            {0.5, -0.3, -0.3},
-            0.1,
-            {
-                {0, 0, 0.2},
-                {0, 0, 0.5},
-                {1, 1,   1},
-                100,
-                1
-            }
-        });
-
-    Tracer tracer(scene, SCREEN_WIDTH, SCREEN_HEIGHT);
+    Tracer tracer(&scene, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     while (window.isOpen())
     {
