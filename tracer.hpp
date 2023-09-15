@@ -27,6 +27,8 @@ class Tracer
     Scene     *m_scene;
     sf::Image  m_image;
 
+    int8_t     m_target;
+
 public:
 
     Tracer(Scene *scene, int32_t width, int32_t height) :
@@ -41,7 +43,8 @@ public:
 
         m_camera (0, 0, 1),
         m_scene  (scene),
-        m_image  {}
+        m_image  {},
+        m_target (-1)
     {
         m_image.create(width, height);
     }
@@ -50,6 +53,12 @@ public:
 
     Tracer& operator = (const Tracer &rhs) = default;
 
+    void setTarget(int8_t id)
+    {
+        m_target = id;
+    }
+
+    int8_t getSphereId(int32_t x, int32_t y);
     RayHit nearestHitSphere(const Vector3 &pos, const Vector3 &dir) const;
 
     Vector3 getIllumination(const RayHit &sphere_hit, const Light &light, const Vector3 &dir_hit_light) const;

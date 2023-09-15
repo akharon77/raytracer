@@ -12,12 +12,15 @@ class Sphere
 
     Material m_material;
 
+    int8_t   m_id;
+
 public:
 
-    Sphere(const Vector3 &center = {}, double radius = 0, Material material = {}) :
+    Sphere(const Vector3 &center = {}, double radius = 0, Material material = {}, int8_t id = 0) :
         m_center   (center),
         m_radius   (radius),
-        m_material (material)
+        m_material (material),
+        m_id       (id)
     {}
 
     Sphere(const Sphere &rhs) = default;

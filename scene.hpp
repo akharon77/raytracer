@@ -15,24 +15,23 @@ class Scene
     int8_t m_cnt_lights;
     Light  m_lights[MAX_LIGHTS];
 
+    int8_t m_target;
+
 public:
 
     Scene() : 
         m_cnt_spheres (0),
         m_spheres     {},
         m_cnt_lights  (0),
-        m_lights      {}
+        m_lights      {},
+        m_target      (-1)
     {}
 
     Scene(const Scene &rhs) = default;
 
     Scene& operator = (const Scene &rhs) = default;
 
-    ~Scene()
-    {
-        m_cnt_spheres = 0;
-        m_cnt_lights  = 0;
-    }
+    ~Scene() = default;
 
     void addSphere(const Sphere &sphere)
     {
@@ -76,7 +75,7 @@ public:
 
         addLight(
             {
-                {2, 10, 10},
+                {5, 10, 10},
                 {1, 1, 1},
                 {1, 1, 1},
                 {1, 1, 1}
@@ -84,7 +83,7 @@ public:
 
         // addLight(
         //     {
-        //         {-10, -10, 5},
+        //         {-15, 5, 2},
         //         {1, 1, 1},
         //         {1, 1, 1},
         //         {1, 1, 1}
@@ -98,8 +97,8 @@ public:
                     {0.1, 0, 0},
                     {0.7, 0, 0},
                     {  1, 1, 1},
-                    100,
-                    0.8
+                    400,
+                    1
                 }
             });
 
@@ -111,8 +110,8 @@ public:
                     {0.1, 0, 0.1},
                     {0.7, 0, 0.7},
                     {  1, 1, 1},
-                    100,
-                    0
+                    400,
+                    1
                 }
             });
 
@@ -124,8 +123,8 @@ public:
                     {0, 0.1, 0},
                     {0, 0.6, 0},
                     {1,   1, 1},
-                    100,
-                    0.6
+                    400,
+                    1
                 }
             });
 
@@ -137,7 +136,7 @@ public:
                     {0, 0, 0.2},
                     {0, 0, 0.5},
                     {1, 1,   1},
-                    100,
+                    400,
                     1
                 }
             });
