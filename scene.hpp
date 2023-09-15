@@ -49,24 +49,24 @@ public:
         m_lights[m_cnt_lights++] = light;
     }
 
-    int8_t cntSpheres() const
+    int8_t getCntSpheres() const
     {
         return m_cnt_spheres;
     }
 
-    const Sphere* spheres() const
+    Sphere& getSphere(int8_t id)
     {
-        return m_spheres;
+        return m_spheres[id];
     }
 
-    int8_t cntLights() const
+    int8_t getCntLights() const
     {
         return m_cnt_lights;
     }
 
-    const Light* lights() const
+    Light& getLight(int8_t id)
     {
-        return m_lights;
+        return m_lights[id];
     }
 
     void setExampleScene()

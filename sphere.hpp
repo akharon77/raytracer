@@ -33,6 +33,11 @@ public:
     }
 
     RayHit rayIntersect(const Vector3 &pos, const Vector3 &dir) const;
+
+    Material& getMaterial()
+    {
+        return m_material;
+    }
 };
 
 #endif  // SPHERE_HPP

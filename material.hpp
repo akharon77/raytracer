@@ -31,30 +31,36 @@ public:
         m_shiness = NAN;
     }
 
-    Vector3 ambient() const
+    Vector3 getAmbient() const
     {
         return m_ambient_color;
     }
 
-    Vector3 diffuse() const
+    Vector3 getDiffuse() const
     {
         return m_diffuse_color;
     }
 
-    Vector3 specular() const
+    Vector3 getSpecular() const
     {
         return m_specular_color;
     }
 
-    double shiness() const
+    double getShiness() const
     {
         return m_shiness;
     }
 
-    double reflection() const
+    void setShiness(double shiness)
+    {
+        m_shiness = shiness;
+    }
+
+    double getReflection() const
     {
         return m_reflection;
     }
 };
 
 #endif  // MATERIAL_HPP
+

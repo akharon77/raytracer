@@ -6,9 +6,9 @@ RayHit Tracer::nearestHitSphere(const Vector3 &pos, const Vector3 &dir) const
 
     int8_t min_id = -1;
 
-    for (int8_t i = 0; i < m_scene->cntSpheres(); ++i)
+    for (int8_t i = 0; i < m_scene->getCntSpheres(); ++i)
     {
-        RayHit hit = m_scene->spheres()[i].rayIntersect(pos, dir);
+        RayHit hit = m_scene->getSphere(i).rayIntersect(pos, dir);
 
         if (hit.hit() && (!min_hit.hit() || hit.len() < min_hit.len()))
         {
@@ -25,13 +25,13 @@ Vector3 Tracer::getIllumination(const RayHit &sphere_hit, const Light &light, co
 {
     Vector3 illumination = {};
 
-    illumination += sphere_hit.material().ambient() * light.ambient();
+    illumination += sphere_hit.material().getAmbient() * light.getAmbient();
 
-    illumination += sphere_hit.material().diffuse() * light.diffuse() * Vector3::dot(dir_hit_light, sphere_hit.norm());
+    illumination += sphere_hit.material().getDiffuse() * light.getDiffuse() * Vector3::dot(dir_hit_light, sphere_hit.norm());
 
     Vector3 dir_hit_camera = (m_camera - sphere_hit.pos()).norm();
     Vector3 dir_cam_light = (dir_hit_light + dir_hit_camera).norm();
-    illumination += sphere_hit.material().specular() * light.specular() * pow(Vector3::dot(sphere_hit.norm(), dir_cam_light), sphere_hit.material().shiness() / 4);
+    illumination += sphere_hit.material().getSpecular() * light.getSpecular() * pow(Vector3::dot(sphere_hit.norm(), dir_cam_light), sphere_hit.material().getShiness() / 4);
 
     return illumination;
 }
@@ -97,9 +97,9 @@ Vector3 Tracer::rayHit(Vector3 &origin, Vector3 &dir) const
 
         Vector3 illumination = {};
 
-        for (int8_t l = 0; l < m_scene->cntLights(); ++l)
+        for (int8_t l = 0; l < m_scene->getCntLights(); ++l)
         {
-            Light light = m_scene->lights()[l];
+            Light light = m_scene->getLight(l);
 
             Vector3 dir_hit_light = (light.pos() - shifted_hit_pos).norm();
 
@@ -113,7 +113,7 @@ Vector3 Tracer::rayHit(Vector3 &origin, Vector3 &dir) const
         }
 
         color +=  illumination * reflection;
-        reflection *= sphere_hit.material().reflection();
+        reflection *= sphere_hit.material().getReflection();
         origin = shifted_hit_pos;
 
         dir = (dir - sphere_hit.norm() * 2 * Vector3::dot(dir, sphere_hit.norm())).norm();

@@ -26,17 +26,17 @@ public:
 
     ~Light() = default;
 
-    Vector3 ambient() const
+    Vector3 getAmbient() const
     {
         return m_ambient_color;
     }
 
-    Vector3 diffuse() const
+    Vector3 getDiffuse() const
     {
         return m_diffuse_color;
     }
 
-    Vector3 specular() const
+    Vector3 getSpecular() const
     {
         return m_specular_color;
     }

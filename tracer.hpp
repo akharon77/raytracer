@@ -66,6 +66,16 @@ public:
     Vector3 rayHit(Vector3 &origin, Vector3 &dir) const;
 
     const sf::Image& render();
+
+    int8_t getTarget() const
+    {
+        return m_target;
+    };
+
+    Scene* getScene()
+    {
+        return m_scene;
+    }
 };
 
 #endif  // TRACER_HPP
